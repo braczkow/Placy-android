@@ -4,10 +4,16 @@ import android.app.Application
 
 class App : Application() {
 
+    override fun onCreate() {
+        super.onCreate()
+        appComponent = DaggerAppComponent
+            .builder()
+            .appModule(AppModule(applicationContext))
+            .build()
+    }
 
     companion object {
-        fun get() {
-            
-        }
+        private lateinit var appComponent : AppComponent
+        fun dagger() = appComponent
     }
 }

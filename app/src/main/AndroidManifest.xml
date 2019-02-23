@@ -17,6 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <activity android:name=".places.PlaceCreateActivity">
+        </activity>
+
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCJdZNg8Aq0-i3UPcC2cw1lBCVto5tjJcg"/>
     </application>
 
 </manifest>

@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1010620754140",
+    "firebase_url": "https://placy-232618.firebaseio.com",
+    "project_id": "placy-232618",
+    "storage_bucket": "placy-232618.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1010620754140:android:e9e5a67cecfb372f",
+        "android_client_info": {
+          "package_name": "com.braczkow.placy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1010620754140-809rdup1rd9j29d9l9278ppq06tef6mp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB61kfeqayPWZVS2RF42OFay4K8tAnUQ8c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
