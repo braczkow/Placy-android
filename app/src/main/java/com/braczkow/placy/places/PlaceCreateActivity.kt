@@ -16,11 +16,9 @@ class PlaceCreateActivity : AppCompatActivity() {
     @Inject
     lateinit var someApi: SomeApi
 
-    val mapsApiKey = "AIzaSyCJdZNg8Aq0-i3UPcC2cw1lBCVto5tjJcg"
-
-    val TAG = "PLC " + PlaceCreateActivity::class.java.simpleName
-
     private lateinit var mapFragment: SupportMapFragment
+
+    private val TAG = "PLC " + PlaceCreateActivity::class.java.simpleName
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.dagger().placeComponentBuilder().build().inject(this)
@@ -32,6 +30,10 @@ class PlaceCreateActivity : AppCompatActivity() {
         mapFragment = supportFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
         mapFragment.getMapAsync { map ->
             Log.d(TAG, "Got map!")
+
+
+
+
         }
     }
 

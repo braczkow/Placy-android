@@ -20,7 +20,8 @@
         <activity android:name=".places.PlaceCreateActivity">
         </activity>
 
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCJdZNg8Aq0-i3UPcC2cw1lBCVto5tjJcg"/>
+        <!--<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCJdZNg8Aq0-i3UPcC2cw1lBCVto5tjJcg"/>-->
+        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB61kfeqayPWZVS2RF42OFay4K8tAnUQ8c"/>
     </application>
 
 </manifest>
