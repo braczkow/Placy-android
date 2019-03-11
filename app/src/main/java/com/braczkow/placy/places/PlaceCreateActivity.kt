@@ -44,8 +44,6 @@ class PlaceCreateActivity : AppCompatActivity() {
                 .subscribe { mmr ->
                     map.animateCamera(CameraUpdateFactory.newLatLngZoom(mmr.latLng, mmr.zoom))
                 }
-
-
         }
     }
 

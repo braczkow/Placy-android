@@ -1,5 +1,6 @@
 package com.braczkow.placy.base
 
+import com.braczkow.placy.core.di.CoreModule
 import com.braczkow.placy.places.di.PlacesComponent
 import com.braczkow.placy.places.di.PlacesModule
 import dagger.Component
@@ -10,6 +11,7 @@ import javax.inject.Singleton
     modules = [
         AppModule::class,
         SubcomponentsModule::class,
+        CoreModule::class,
         PlacesModule::class
     ]
 )
