@@ -1,8 +1,8 @@
 package com.braczkow.placy.base
 
-import com.braczkow.placy.core.di.CoreModule
-import com.braczkow.placy.places.di.PlacesComponent
-import com.braczkow.placy.places.di.PlacesModule
+import com.braczkow.placy.feature.di.CoreModule
+import com.braczkow.placy.feature.di.PlacesModule
+import com.braczkow.placy.ui.PlaceCreateActivityDaggerComponent
 import dagger.Component
 import javax.inject.Singleton
 
@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
-        SubcomponentsModule::class,
+        ActivitiesSubcomponents::class,
         CoreModule::class,
         PlacesModule::class
     ]
@@ -23,6 +23,6 @@ interface AppComponent {
         fun appModule(appModule: AppModule): Builder
     }
 
-    fun placeComponentBuilder() : PlacesComponent.Builder
+    fun placeComponentBuilder() : PlaceCreateActivityDaggerComponent.Builder
 
 }

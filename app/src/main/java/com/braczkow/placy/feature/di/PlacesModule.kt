@@ -1,7 +1,7 @@
-package com.braczkow.placy.places.di
+package com.braczkow.placy.feature.di
 
-import com.braczkow.placy.places.LocationApi
-import com.braczkow.placy.places.LocationApiImpl
+import com.braczkow.placy.feature.LocationApi
+import com.braczkow.placy.feature.LocationApiImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -1,4 +1,4 @@
-package com.braczkow.placy.core
+package com.braczkow.placy.feature
 
 import android.Manifest
 import android.content.Context
@@ -16,7 +16,8 @@ interface PermissionApi {
     fun hasLocationPermission() : Boolean
 }
 
-class PermissionApiImpl @Inject constructor(val context: Context) : PermissionApi {
+class PermissionApiImpl @Inject constructor(val context: Context) :
+    PermissionApi {
     override fun hasLocationPermission(): Boolean {
         //todo get from storage
         return when (ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION)) {

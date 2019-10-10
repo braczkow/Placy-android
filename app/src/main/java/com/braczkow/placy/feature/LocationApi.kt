@@ -1,12 +1,10 @@
-package com.braczkow.placy.places
+package com.braczkow.placy.feature
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.os.Looper
 import android.util.Log
-import com.braczkow.placy.core.PermissionApi
-import com.braczkow.placy.core.PermissionState
 import com.google.android.gms.location.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject

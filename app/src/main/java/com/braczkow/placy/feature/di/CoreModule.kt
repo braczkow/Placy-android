@@ -1,7 +1,7 @@
-package com.braczkow.placy.core.di
+package com.braczkow.placy.feature.di
 
-import com.braczkow.placy.core.PermissionApi
-import com.braczkow.placy.core.PermissionApiImpl
+import com.braczkow.placy.feature.PermissionApi
+import com.braczkow.placy.feature.PermissionApiImpl
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

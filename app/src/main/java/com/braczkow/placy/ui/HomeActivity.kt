@@ -1,10 +1,9 @@
-package com.braczkow.placy.home
+package com.braczkow.placy.ui
 
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import com.braczkow.placy.R
-import com.braczkow.placy.places.PlaceCreateActivity
 import kotlinx.android.synthetic.main.activity_home.*
 
 
