@@ -8,16 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.braczkow.placy.R
-import com.braczkow.placy.feature.LocationApi
-import com.braczkow.placy.feature.di.SomeApi
-import com.google.android.gms.maps.SupportMapFragment
 import kotlinx.android.synthetic.main.fragment_home.view.*
-import javax.inject.Inject
 
 
 class HomeFragment : Fragment() {
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -32,6 +26,7 @@ class HomeFragment : Fragment() {
 
         return view
     }
+
 
 
 
