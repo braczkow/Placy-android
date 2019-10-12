@@ -1,8 +1,8 @@
 package com.braczkow.placy.ui
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import com.braczkow.placy.R
 import com.braczkow.placy.base.App
 import com.braczkow.placy.feature.LocationApi
