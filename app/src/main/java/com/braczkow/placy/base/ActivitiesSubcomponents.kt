@@ -1,10 +1,10 @@
 package com.braczkow.placy.base
 
-import com.braczkow.placy.ui.PlaceCreateActivityDaggerComponent
+import com.braczkow.placy.ui.PlaceCreateFragmentDaggerComponent
 import dagger.Module
 
 @Module(subcomponents = [
-    PlaceCreateActivityDaggerComponent::class
+    PlaceCreateFragmentDaggerComponent::class
 ])
 class ActivitiesSubcomponents {
 }

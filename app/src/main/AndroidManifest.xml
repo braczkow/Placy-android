@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.braczkow.placy">
+        package="com.braczkow.placy">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
             android:name=".base.App"
@@ -12,18 +12,16 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
-        <activity android:name=".ui.HomeActivity">
+        <activity android:name=".ui.HostActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.PlaceCreateActivity">
-        </activity>
-
-        <!--<meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyCJdZNg8Aq0-i3UPcC2cw1lBCVto5tjJcg"/>-->
-        <meta-data android:name="com.google.android.geo.API_KEY" android:value="AIzaSyB61kfeqayPWZVS2RF42OFay4K8tAnUQ8c"/>
+        <meta-data
+                android:name="com.google.android.geo.API_KEY"
+                android:value="AIzaSyB61kfeqayPWZVS2RF42OFay4K8tAnUQ8c" />
     </application>
 
 </manifest>
