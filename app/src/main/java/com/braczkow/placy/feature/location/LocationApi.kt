@@ -9,6 +9,7 @@ import com.braczkow.placy.feature.PermissionApi
 import com.google.android.gms.location.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import timber.log.Timber
 import javax.inject.Inject
 
 interface LocationUpdatesRequest {
@@ -66,7 +67,7 @@ class LocationApiImpl @Inject constructor(
         override fun onLocationResult(p0: LocationResult?) {
             super.onLocationResult(p0)
 
-            Log.d(TAG, "onLocation: ${p0}")
+            Timber.d( "onLocation: ${p0}")
 
             p0?.let {
                 locationPublisher.onNext(it.lastLocation)

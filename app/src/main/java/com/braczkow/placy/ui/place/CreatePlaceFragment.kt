@@ -19,6 +19,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -94,7 +95,7 @@ class CreatePlaceFragment : Fragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        Log.d(TAG, "onRequestPermissionsResult: $requestCode $permissions $grantResults")
+        Timber.d( "onRequestPermissionsResult: $requestCode $permissions $grantResults")
     }
 
 

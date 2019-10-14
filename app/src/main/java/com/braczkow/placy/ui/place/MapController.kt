@@ -1,6 +1,5 @@
 package com.braczkow.placy.ui.place
 
-import android.util.Log
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
@@ -8,6 +7,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
+import timber.log.Timber
 
 interface MapController {
     fun moveMarkerTo(latLng: LatLng)
@@ -22,10 +22,10 @@ class MapControllerImpl(private val mapFragment: SupportMapFragment) : MapContro
 
     init {
         mapFragment.getMapAsync { map ->
-            Log.d(TAG, "Got map!")
+            Timber.d( "Got map!")
 
             map.setOnMapLongClickListener {latLng ->
-                Log.d(TAG, "Long click on: ${latLng}")
+                Timber.d( "Long click on: ${latLng}")
                 longClicksPublisher.onNext(latLng)
             }
 
