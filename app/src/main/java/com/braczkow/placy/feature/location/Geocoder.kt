@@ -9,9 +9,10 @@ import io.reactivex.Single
 import java.util.*
 import javax.inject.Inject
 
-typealias GeocodingResult = Pair<Boolean, String?>
+
 
 interface GeocoderApi {
+    data class GeocodingResult(val isSuccessful : Boolean, val result: String?)
     fun getFromLatLng(latLng: LatLng): Single<GeocodingResult>
 
     companion object {
@@ -25,21 +26,21 @@ class GeocoderApiImpl @Inject constructor(
     private val context: Context,
     private val sf: SchedulersFactory
 ) : GeocoderApi {
-    override fun getFromLatLng(latLng: LatLng): Single<GeocodingResult> {
+    override fun getFromLatLng(latLng: LatLng): Single<GeocoderApi.GeocodingResult> {
         return Single.fromCallable {
             try {
                 val locations = Geocoder(context).getFromLocation(latLng.latitude, latLng.longitude, 1)
                 return@fromCallable if (locations.size > 0) {
-                    GeocodingResult(true, formatAddressString(locations[0]))
+                    GeocoderApi.GeocodingResult(true, formatAddressString(locations[0]))
                 } else {
-                    GeocodingResult(
+                    GeocoderApi.GeocodingResult(
                         false,
                         GeocoderApi.makeLatLngStr(latLng)
                     )
                 }
             } catch (e: Exception) {
                 //Timber.d("Geocoder exception: $e")
-                return@fromCallable GeocodingResult(
+                return@fromCallable GeocoderApi.GeocodingResult(
                     false,
                     GeocoderApi.makeLatLngStr(latLng)
                 )

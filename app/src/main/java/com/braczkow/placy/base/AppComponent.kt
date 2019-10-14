@@ -2,7 +2,7 @@ package com.braczkow.placy.base
 
 import com.braczkow.placy.feature.di.UtilModule
 import com.braczkow.placy.feature.di.LocationModule
-import com.braczkow.placy.ui.PlaceCreateFragmentDaggerComponent
+import com.braczkow.placy.ui.place.CreatePlaceFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -23,6 +23,6 @@ interface AppComponent {
         fun appModule(appModule: AppModule): Builder
     }
 
-    fun placeComponentBuilder() : PlaceCreateFragmentDaggerComponent.Builder
+    fun placeComponentBuilder() : CreatePlaceFragment.DaggerComponent.Builder
 
 }

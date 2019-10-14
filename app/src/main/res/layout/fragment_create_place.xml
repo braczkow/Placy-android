@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
 
 
     <FrameLayout
@@ -13,36 +11,57 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
         <fragment
                 android:id="@+id/map_fragment"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent" />
     </FrameLayout>
 
     <FrameLayout
+            android:id="@+id/map_address_frame"
             android:layout_width="match_parent"
             android:layout_height="64dp"
+            android:background="@color/normal_blue"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:alpha="0.75"
-            android:background="@color/light_blue"
-            >
+            app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+                android:id="@+id/map_address_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="BLABLABLA"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="16dp"
                 android:textColor="@color/light_white"
-            />
+                tools:text="This is encoded address"
+                />
     </FrameLayout>
 
+    <FrameLayout
+            android:id="@+id/map_proceed_frame"
+            android:layout_width="match_parent"
+            android:layout_height="88dp"
+            android:background="@color/light_white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:layout_constraintStart_toStartOf="parent"
+            tools:visibility="visible">
+
+        <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="16dp"
+                android:background="@color/normal_blue"
+                android:textColor="@color/light_white"
+                android:text="PROCEED"
+                />
+
+    </FrameLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
