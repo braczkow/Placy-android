@@ -8,6 +8,7 @@ import com.braczkow.placy.feature.location.LocationUpdatesRequest
 import com.braczkow.placy.feature.util.*
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_create_place.view.*
+import kotlinx.coroutines.*
 import javax.inject.Inject
 
 
@@ -20,6 +21,7 @@ class PlacePresenter @Inject constructor(
     private val placeView: PlaceView) {
 
     private val locationReq: LocationUpdatesRequest
+    private val uiScope = CoroutineScope(Dispatchers.Main)
 
     init {
         locationReq = locationApi.makeLocationUpdatesRequest()
@@ -43,6 +45,7 @@ class PlacePresenter @Inject constructor(
 
 
         DoOnStop(lifecycle) {
+            uiScope.coroutineContext.cancelChildren()
             locationReq.stop()
         }
 
@@ -61,14 +64,12 @@ class PlacePresenter @Inject constructor(
         latLng: LatLng,
         dos: DisposableOnStop
     ) {
-        dos.add(geocoderApi
-            .getFromLatLng(latLng)
-            .observeOn(sf.mainThread())
-            .subscribe { success, error ->
-                if (success?.isSuccessful == true) {
-                    placeView.showAddress(success.result ?: "Default")
-                }
-            })
+        uiScope.launch {
+            val result = geocoderApi.geocodeLatLng(latLng)
+            if (result.isSuccessful) {
+                placeView.showAddress(result.result)
+            }
+        }
     }
 }
 class PlaceView(private val rootView: View) {
