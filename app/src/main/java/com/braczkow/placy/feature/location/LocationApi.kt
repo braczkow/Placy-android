@@ -9,6 +9,7 @@ import com.braczkow.placy.feature.PermissionApi
 import com.google.android.gms.location.*
 import io.reactivex.Observable
 import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,7 +28,7 @@ class LocationApiImpl @Inject constructor(
     val context : Context,
     val permissionApi: PermissionApi
 ) : LocationApi {
-    private val locationPublisher = BehaviorSubject.create<Location>()
+    private val locationPublisher = PublishSubject.create<Location>()
     private val startedRequests = mutableListOf<LocationUpdatesRequest>()
 
     private val fusedLocationClient: FusedLocationProviderClient
