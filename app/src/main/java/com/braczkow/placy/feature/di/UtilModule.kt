@@ -2,6 +2,7 @@ package com.braczkow.placy.feature.di
 
 import com.braczkow.placy.feature.PermissionApi
 import com.braczkow.placy.feature.PermissionApiImpl
+import com.braczkow.placy.feature.util.DispatchersFactory
 import com.braczkow.placy.feature.util.SchedulersFactory
 import dagger.Module
 import dagger.Provides
@@ -15,4 +16,7 @@ class UtilModule {
 
     @Provides
     fun provideSchedulersFactory() = SchedulersFactory()
+
+    @Provides
+    fun provideDispatchersFactory() = DispatchersFactory()
 }

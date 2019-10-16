@@ -17,11 +17,11 @@ class PlacePresenter @Inject constructor(
     private val lifecycle: Lifecycle,
     private val mapController: MapController,
     private val geocoderApi: GeocoderApi,
-    private val sf: SchedulersFactory,
+    private val df: DispatchersFactory,
     private val placeView: PlaceView) {
 
     private val locationReq: LocationUpdatesRequest
-    private val uiScope = CoroutineScope(Dispatchers.Main)
+    private val uiScope = CoroutineScope(df.main())
 
     init {
         locationReq = locationApi.makeLocationUpdatesRequest()
@@ -33,13 +33,13 @@ class PlacePresenter @Inject constructor(
             dos.add(locationApi.locationRx()
                 .subscribe {
                     val latLng = LatLng(it.latitude, it.longitude)
-                    proceedWith(latLng, dos)
+                    proceedWith(latLng)
                 })
 
             dos.add(mapController
                 .longClicks()
                 .subscribe {
-                    proceedWith(it, dos)
+                    proceedWith(it)
                 })
         }
 
@@ -52,17 +52,15 @@ class PlacePresenter @Inject constructor(
     }
 
     private fun proceedWith(
-        it: LatLng,
-        dos: DisposableOnStop
+        it: LatLng
     ) {
         mapController.moveMarkerTo(it)
-        startGeocoding(it, dos)
+        startGeocoding(it)
         placeView.showProceedButton()
     }
 
     private fun startGeocoding(
-        latLng: LatLng,
-        dos: DisposableOnStop
+        latLng: LatLng
     ) {
         uiScope.launch {
             val result = geocoderApi.geocodeLatLng(latLng)
