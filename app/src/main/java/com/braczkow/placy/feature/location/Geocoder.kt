@@ -19,7 +19,7 @@ interface GeocoderApi {
 
     companion object {
         fun makeLatLngStr(latLng: LatLng): String {
-            return String.format(Locale.US, "LATLNG %.6f, %.6f", latLng.latitude, latLng.longitude)
+            return String.format(Locale.US, "(%.6f, %.6f)", latLng.latitude, latLng.longitude)
         }
     }
 }
@@ -43,6 +43,7 @@ class GeocoderApiImpl @Inject constructor(
                 )
             }
         } catch (e : Throwable) {
+            Timber.d("Geocoder catch: $e")
             GeocoderApi.GeocodingResult(
                 false,
                 GeocoderApi.makeLatLngStr(latLng))
