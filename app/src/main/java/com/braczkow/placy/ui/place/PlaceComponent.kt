@@ -9,6 +9,7 @@ import com.braczkow.placy.feature.util.*
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_create_place.view.*
 import kotlinx.coroutines.*
+import timber.log.Timber
 import javax.inject.Inject
 
 
@@ -20,10 +21,19 @@ class PlacePresenter @Inject constructor(
     private val df: DispatchersFactory,
     private val placeView: PlaceView) {
 
+    private var lastSelectedLocation: LatLng? = null
     private val locationReq: LocationUpdatesRequest
     private val uiScope = CoroutineScope(df.main())
 
     init {
+        placeView.proceedBtnClicks {
+            if (lastSelectedLocation != null) {
+                Timber.d("Location is set, can proceed")
+            } else {
+                Timber.d("Location not selected, cannot proceed")
+            }
+        }
+
         locationReq = locationApi.makeLocationUpdatesRequest()
 
         DoOnStart(lifecycle) {
@@ -54,6 +64,8 @@ class PlacePresenter @Inject constructor(
     private fun proceedWith(
         it: LatLng
     ) {
+        Timber.d("proceedWith: $it")
+        lastSelectedLocation = it
         mapController.moveMarkerTo(it)
         startGeocoding(it)
         placeView.showProceedButton()
@@ -77,6 +89,10 @@ class PlaceView(private val rootView: View) {
 
     fun showProceedButton() {
         rootView.map_proceed_frame.visible()
+    }
+
+    fun proceedBtnClicks(clicks: () -> Unit) {
+        rootView.map_proceed_btn.setOnClickListener { clicks() }
     }
 
 }
