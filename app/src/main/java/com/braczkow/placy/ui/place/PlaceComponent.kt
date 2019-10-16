@@ -12,6 +12,13 @@ import kotlinx.coroutines.*
 import timber.log.Timber
 import javax.inject.Inject
 
+interface CreatePlaceNavigation {
+    sealed class Event {
+        data class ProceedWith(val latLng: LatLng) : Event()
+    }
+
+    fun navigate(event: Event)
+}
 
 class PlacePresenter @Inject constructor(
     private val locationApi: LocationApi,
@@ -19,6 +26,7 @@ class PlacePresenter @Inject constructor(
     private val mapController: MapController,
     private val geocoderApi: GeocoderApi,
     private val df: DispatchersFactory,
+    private val navigation: CreatePlaceNavigation,
     private val placeView: PlaceView) {
 
     private var lastSelectedLocation: LatLng? = null
@@ -29,6 +37,7 @@ class PlacePresenter @Inject constructor(
         placeView.proceedBtnClicks {
             if (lastSelectedLocation != null) {
                 Timber.d("Location is set, can proceed")
+                navigation.navigate(CreatePlaceNavigation.Event.ProceedWith(lastSelectedLocation!!))
             } else {
                 Timber.d("Location not selected, cannot proceed")
             }
@@ -74,10 +83,13 @@ class PlacePresenter @Inject constructor(
     private fun startGeocoding(
         latLng: LatLng
     ) {
+        placeView.showAddress("Determining the address...")
         uiScope.launch {
             val result = geocoderApi.geocodeLatLng(latLng)
             if (result.isSuccessful) {
                 placeView.showAddress(result.result)
+            } else {
+                placeView.showAddress("Cannot evaluate: ${result.result}")
             }
         }
     }

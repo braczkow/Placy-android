@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
+import androidx.navigation.fragment.findNavController
 import com.braczkow.placy.R
 import com.braczkow.placy.base.App
 import com.braczkow.placy.feature.location.LocationApi
@@ -39,12 +40,16 @@ class CreatePlaceFragment : Fragment() {
     class DaggerModule(
         val lifecycle: Lifecycle,
         val mapController: MapController,
+        val navigation: CreatePlaceNavigation,
         val placeView: PlaceView) {
         @Provides
         fun provideLifecycle() = lifecycle
 
         @Provides
         fun provideMapController() = mapController
+
+        @Provides
+        fun provideNavigation() = navigation
 
         @Provides
         fun provideView() = placeView
@@ -72,7 +77,7 @@ class CreatePlaceFragment : Fragment() {
         App
             .dagger()
             .placeComponentBuilder()
-            .plus(DaggerModule(lifecycle, mapController, PlaceView(view)))
+            .plus(DaggerModule(lifecycle, mapController, createNavigation(), PlaceView(view)))
             .build()
             .inject(this)
 
@@ -86,6 +91,15 @@ class CreatePlaceFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun createNavigation(): CreatePlaceNavigation {
+        return object : CreatePlaceNavigation {
+            override fun navigate(event: CreatePlaceNavigation.Event) {
+                findNavController()
+                    .navigate(R.id.action_createPlaceFragment_to_setNameFragment)
+            }
+        }
     }
 
     override fun onRequestPermissionsResult(

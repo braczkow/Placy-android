@@ -19,5 +19,14 @@
             android:id="@+id/createPlaceFragment"
             android:name="com.braczkow.placy.ui.place.CreatePlaceFragment"
             android:label="fragment_create_place"
-            tools:layout="@layout/fragment_create_place" />
+            tools:layout="@layout/fragment_create_place" >
+        <action
+                android:id="@+id/action_createPlaceFragment_to_setNameFragment"
+                app:destination="@id/setNameFragment" />
+    </fragment>
+    <fragment
+            android:id="@+id/setNameFragment"
+            android:name="com.braczkow.placy.ui.place.SetNameFragment"
+            android:label="fragment_set_name"
+            tools:layout="@layout/fragment_set_name" />
 </navigation>
