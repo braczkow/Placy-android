@@ -30,17 +30,25 @@ class GeocoderApiImpl @Inject constructor(
 ) : GeocoderApi {
 
     override suspend fun geocodeLatLng(latLng: LatLng): GeocoderApi.GeocodingResult = withContext(Dispatchers.IO) {
-        Timber.d("Inside geocodeLatLng")
-        val locations = Geocoder(context).getFromLocation(latLng.latitude, latLng.longitude, 1)
+        Timber.d("Inside geocodeLatLng: $latLng")
+        val result = try {
+            val locations = Geocoder(context).getFromLocation(latLng.latitude, latLng.longitude, 1)
 
-        if (locations.size > 0) {
-            GeocoderApi.GeocodingResult(true, formatAddressString(locations[0]))
-        } else {
+            if (locations.size > 0) {
+                GeocoderApi.GeocodingResult(true, formatAddressString(locations[0]))
+            } else {
+                GeocoderApi.GeocodingResult(
+                    false,
+                    GeocoderApi.makeLatLngStr(latLng)
+                )
+            }
+        } catch (e : Throwable) {
             GeocoderApi.GeocodingResult(
                 false,
-                GeocoderApi.makeLatLngStr(latLng)
-            )
+                GeocoderApi.makeLatLngStr(latLng))
         }
+
+        result
     }
 
     private fun formatAddressString(address: Address): String {
