@@ -37,7 +37,8 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="16dp"
                 android:textColor="@color/light_white"
-                tools:text="This is encoded address"
+                android:text="@string/place_long_press_rationale"
+                android:textStyle="bold"
                 />
     </FrameLayout>
 
@@ -59,7 +60,7 @@
                 android:layout_margin="16dp"
                 android:background="@color/normal_blue"
                 android:textColor="@color/light_white"
-                android:text="PROCEED"
+                android:text="@string/place_action_proceed"
                 />
 
     </FrameLayout>
