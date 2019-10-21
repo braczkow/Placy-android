@@ -42,6 +42,7 @@ class CreatePlaceFragment : Fragment() {
         val mapController: MapController,
         val navigation: CreatePlaceNavigation,
         val placeView: PlaceView) {
+
         @Provides
         fun provideLifecycle() = lifecycle
 
@@ -61,15 +62,10 @@ class CreatePlaceFragment : Fragment() {
     @Inject
     lateinit var placePresenter: PlacePresenter
 
-
-
-    private val TAG = "PLC " + CreatePlaceFragment::class.java.simpleName
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): android.view.View? {
-        // Inflate the layout for this fragment
         val view =  inflater.inflate(R.layout.fragment_create_place, container, false)
         val mapFragment =  childFragmentManager.findFragmentById(R.id.map_fragment) as SupportMapFragment
         val mapController = MapControllerImpl(mapFragment)
@@ -80,9 +76,6 @@ class CreatePlaceFragment : Fragment() {
             .plus(DaggerModule(lifecycle, mapController, createNavigation(), PlaceView(view)))
             .build()
             .inject(this)
-
-
-
 
         if (ContextCompat.checkSelfPermission(context!!, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
