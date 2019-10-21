@@ -5,4 +5,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="place_action_proceed">proceed</string>
     <string name="place_long_press_rationale">Long press to select a place</string>
+    <string name="place_action_save">Save</string>
+    <string name="place_set_name_title">Please give a name for your place</string>
+    <string name="place_name_hint">Place name</string>
 </resources>
