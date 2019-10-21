@@ -28,5 +28,9 @@
             android:id="@+id/setNameFragment"
             android:name="com.braczkow.placy.ui.place.SetNameFragment"
             android:label="fragment_set_name"
-            tools:layout="@layout/fragment_set_name" />
+            tools:layout="@layout/fragment_set_name" >
+        <argument
+                android:name="latLng"
+                app:argType="com.google.android.gms.maps.model.LatLng" />
+    </fragment>
 </navigation>
