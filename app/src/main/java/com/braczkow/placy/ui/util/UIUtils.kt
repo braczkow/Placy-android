@@ -1,4 +1,4 @@
-package com.braczkow.placy.feature.util
+package com.braczkow.placy.ui.util
 
 import android.view.View
 

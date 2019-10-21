@@ -6,6 +6,7 @@ import com.braczkow.placy.feature.location.GeocoderApi
 import com.braczkow.placy.feature.location.LocationApi
 import com.braczkow.placy.feature.location.LocationUpdatesRequest
 import com.braczkow.placy.feature.util.*
+import com.braczkow.placy.ui.util.visible
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_create_place.view.*
 import kotlinx.coroutines.*
