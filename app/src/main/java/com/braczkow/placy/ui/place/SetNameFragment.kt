@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
+import androidx.navigation.fragment.navArgs
 
 import com.braczkow.placy.R
 import timber.log.Timber
 
 class SetNameFragment : Fragment() {
+
+    val args: SetNameFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -22,6 +25,8 @@ class SetNameFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        Timber.d("args.latLng: ${args.latLng}")
 
         val backCallback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

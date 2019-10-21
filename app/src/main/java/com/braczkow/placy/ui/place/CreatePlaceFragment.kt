@@ -89,8 +89,10 @@ class CreatePlaceFragment : Fragment() {
     private fun createNavigation(): CreatePlaceNavigation {
         return object : CreatePlaceNavigation {
             override fun navigate(event: CreatePlaceNavigation.Event) {
-                findNavController()
-                    .navigate(R.id.action_createPlaceFragment_to_setNameFragment)
+                if (event is CreatePlaceNavigation.Event.ProceedWith) {
+                    val action = CreatePlaceFragmentDirections.actionCreatePlaceFragmentToSetNameFragment(event.latLng)
+                    findNavController().navigate(action)
+                }
             }
         }
     }
