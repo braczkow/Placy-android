@@ -57,9 +57,6 @@ class CreatePlaceFragment : Fragment() {
     }
 
     @Inject
-    lateinit var locationApi: LocationApi
-
-    @Inject
     lateinit var placePresenter: PlacePresenter
 
     override fun onCreateView(

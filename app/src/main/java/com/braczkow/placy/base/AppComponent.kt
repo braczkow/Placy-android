@@ -3,6 +3,7 @@ package com.braczkow.placy.base
 import com.braczkow.placy.feature.di.UtilModule
 import com.braczkow.placy.feature.di.LocationModule
 import com.braczkow.placy.ui.place.CreatePlaceFragment
+import com.braczkow.placy.ui.place.SetNameFragment
 import dagger.Component
 import javax.inject.Singleton
 
@@ -10,7 +11,7 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AppModule::class,
-        ActivitiesSubcomponents::class,
+        Subcomponents::class,
         UtilModule::class,
         LocationModule::class
     ]
@@ -24,5 +25,6 @@ interface AppComponent {
     }
 
     fun placeComponentBuilder() : CreatePlaceFragment.DaggerComponent.Builder
+    fun setNameBuilder() : SetNameFragment.DaggerComponent.Builder
 
 }
