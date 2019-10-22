@@ -2,6 +2,7 @@ package com.braczkow.placy.ui.place.create
 
 import android.view.View
 import com.braczkow.placy.ui.util.visible
+import kotlinx.android.synthetic.main.fragment_create_place.view.*
 
 class CreatePlaceView(private val rootView: View) {
     fun showAddress(result: String) {

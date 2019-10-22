@@ -12,7 +12,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.braczkow.placy.R
 import com.braczkow.placy.base.App
-import com.braczkow.placy.ui.place.CreatePlaceFragmentDirections
 import com.google.android.gms.maps.SupportMapFragment
 import dagger.Module
 import dagger.Provides

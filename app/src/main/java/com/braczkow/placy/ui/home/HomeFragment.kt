@@ -1,4 +1,4 @@
-package com.braczkow.placy.ui
+package com.braczkow.placy.ui.home
 
 
 import android.os.Bundle

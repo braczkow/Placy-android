@@ -1,6 +1,7 @@
 package com.braczkow.placy.ui.place.set_name
 
 import android.view.View
+import kotlinx.android.synthetic.main.fragment_set_name.view.*
 
 class SetNameView(private val rootView: View) {
     fun saveClicks(clicks: () -> Unit) {
