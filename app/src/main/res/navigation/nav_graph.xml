@@ -26,7 +26,7 @@
     </fragment>
     <fragment
             android:id="@+id/setNameFragment"
-            android:name="com.braczkow.placy.ui.place.SetNameFragment"
+            android:name="com.braczkow.placy.ui.place.set_name.SetNameFragment"
             android:label="fragment_set_name"
             tools:layout="@layout/fragment_set_name" >
         <argument

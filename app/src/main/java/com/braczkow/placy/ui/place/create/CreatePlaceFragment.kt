@@ -13,8 +13,6 @@ import androidx.navigation.fragment.findNavController
 import com.braczkow.placy.R
 import com.braczkow.placy.base.App
 import com.braczkow.placy.ui.place.CreatePlaceFragmentDirections
-import com.braczkow.placy.ui.place.MapController
-import com.braczkow.placy.ui.place.MapControllerImpl
 import com.google.android.gms.maps.SupportMapFragment
 import dagger.Module
 import dagger.Provides
@@ -40,7 +38,7 @@ class CreatePlaceFragment : Fragment() {
         val lifecycle: Lifecycle,
         val mapController: MapController,
         val navigation: CreatePlaceNavigation,
-        val placeView: PlaceView
+        val createPlaceView: CreatePlaceView
     ) {
 
         @Provides
@@ -53,11 +51,11 @@ class CreatePlaceFragment : Fragment() {
         fun provideNavigation() = navigation
 
         @Provides
-        fun provideView() = placeView
+        fun provideView() = createPlaceView
     }
 
     @Inject
-    lateinit var placePresenter: PlacePresenter
+    lateinit var createPlacePresenter: CreatePlacePresenter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,7 +71,7 @@ class CreatePlaceFragment : Fragment() {
             .plus(
                 DaggerModule(
                     lifecycle, mapController, createNavigation(),
-                    PlaceView(view)
+                    CreatePlaceView(view)
                 )
             )
             .build()

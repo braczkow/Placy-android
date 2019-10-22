@@ -1,4 +1,4 @@
-package com.braczkow.placy.ui.place
+package com.braczkow.placy.ui.place.create
 
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.SupportMapFragment
@@ -14,7 +14,8 @@ interface MapController {
     fun longClicks(): Observable<LatLng>
 }
 
-class MapControllerImpl(private val mapFragment: SupportMapFragment) : MapController {
+class MapControllerImpl(private val mapFragment: SupportMapFragment) :
+    MapController {
     private val DEFAULT_ZOOM = 15.0f
     private val TAG = "MapCtrl"
 
