@@ -40,7 +40,9 @@ class LocationApiImpl @Inject constructor(
         if (permissionApi.hasLocationPermission()) {
             fusedLocationClient.lastLocation?.let { task ->
                 task.addOnSuccessListener {location ->
-                    locationPublisher.onNext(location)
+                    location?.let {
+                        locationPublisher.onNext(it)
+                    }
                 }
             }
         }

@@ -32,5 +32,10 @@
         <argument
                 android:name="latLng"
                 app:argType="com.google.android.gms.maps.model.LatLng" />
+
+        <action
+                android:id="@+id/finish_place_flow"
+                app:popUpTo="@id/createPlaceFragment"
+                app:popUpToInclusive="true"/>
     </fragment>
 </navigation>

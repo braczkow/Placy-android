@@ -2,6 +2,7 @@ package com.braczkow.placy.base
 
 import com.braczkow.placy.feature.di.UtilModule
 import com.braczkow.placy.feature.di.LocationModule
+import com.braczkow.placy.feature.di.PlaceModule
 import com.braczkow.placy.ui.place.CreatePlaceFragment
 import com.braczkow.placy.ui.place.SetNameFragment
 import dagger.Component
@@ -13,7 +14,8 @@ import javax.inject.Singleton
         AppModule::class,
         Subcomponents::class,
         UtilModule::class,
-        LocationModule::class
+        LocationModule::class,
+        PlaceModule::class
     ]
 )
 interface AppComponent {
