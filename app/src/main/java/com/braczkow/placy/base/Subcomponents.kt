@@ -1,6 +1,6 @@
 package com.braczkow.placy.base
 
-import com.braczkow.placy.ui.place.CreatePlaceFragment
+import com.braczkow.placy.ui.place.create.CreatePlaceFragment
 import com.braczkow.placy.ui.place.SetNameFragment
 import dagger.Module
 

@@ -1,10 +1,9 @@
-package com.braczkow.placy.ui.place
+package com.braczkow.placy.ui.place.create
 
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -13,9 +12,9 @@ import androidx.lifecycle.Lifecycle
 import androidx.navigation.fragment.findNavController
 import com.braczkow.placy.R
 import com.braczkow.placy.base.App
-import com.braczkow.placy.feature.location.LocationApi
-import com.braczkow.placy.feature.location.LocationUpdatesRequest
-import com.braczkow.placy.feature.util.DisposableOnStop
+import com.braczkow.placy.ui.place.CreatePlaceFragmentDirections
+import com.braczkow.placy.ui.place.MapController
+import com.braczkow.placy.ui.place.MapControllerImpl
 import com.google.android.gms.maps.SupportMapFragment
 import dagger.Module
 import dagger.Provides
@@ -41,7 +40,8 @@ class CreatePlaceFragment : Fragment() {
         val lifecycle: Lifecycle,
         val mapController: MapController,
         val navigation: CreatePlaceNavigation,
-        val placeView: PlaceView) {
+        val placeView: PlaceView
+    ) {
 
         @Provides
         fun provideLifecycle() = lifecycle
@@ -70,7 +70,12 @@ class CreatePlaceFragment : Fragment() {
         App
             .dagger()
             .placeComponentBuilder()
-            .plus(DaggerModule(lifecycle, mapController, createNavigation(), PlaceView(view)))
+            .plus(
+                DaggerModule(
+                    lifecycle, mapController, createNavigation(),
+                    PlaceView(view)
+                )
+            )
             .build()
             .inject(this)
 
@@ -87,7 +92,10 @@ class CreatePlaceFragment : Fragment() {
         return object : CreatePlaceNavigation {
             override fun navigate(event: CreatePlaceNavigation.Event) {
                 if (event is CreatePlaceNavigation.Event.ProceedWith) {
-                    val action = CreatePlaceFragmentDirections.actionCreatePlaceFragmentToSetNameFragment(event.latLng)
+                    val action =
+                        CreatePlaceFragmentDirections.actionCreatePlaceFragmentToSetNameFragment(
+                            event.latLng
+                        )
                     findNavController().navigate(action)
                 }
             }

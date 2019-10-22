@@ -17,7 +17,7 @@
     </fragment>
     <fragment
             android:id="@+id/createPlaceFragment"
-            android:name="com.braczkow.placy.ui.place.CreatePlaceFragment"
+            android:name="com.braczkow.placy.ui.place.create.CreatePlaceFragment"
             android:label="fragment_create_place"
             tools:layout="@layout/fragment_create_place" >
         <action

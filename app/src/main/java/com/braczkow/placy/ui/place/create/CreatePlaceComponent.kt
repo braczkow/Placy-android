@@ -1,4 +1,4 @@
-package com.braczkow.placy.ui.place
+package com.braczkow.placy.ui.place.create
 
 import android.view.View
 import androidx.lifecycle.Lifecycle
@@ -6,6 +6,7 @@ import com.braczkow.placy.feature.location.GeocoderApi
 import com.braczkow.placy.feature.location.LocationApi
 import com.braczkow.placy.feature.location.LocationUpdatesRequest
 import com.braczkow.placy.feature.util.*
+import com.braczkow.placy.ui.place.MapController
 import com.braczkow.placy.ui.util.visible
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.fragment_create_place.view.*
@@ -28,7 +29,8 @@ class PlacePresenter @Inject constructor(
     private val geocoderApi: GeocoderApi,
     private val df: DispatchersFactory,
     private val navigation: CreatePlaceNavigation,
-    private val placeView: PlaceView) {
+    private val placeView: PlaceView
+) {
 
     private var lastSelectedLocation: LatLng? = null
     private val locationReq: LocationUpdatesRequest
@@ -38,7 +40,11 @@ class PlacePresenter @Inject constructor(
         placeView.proceedBtnClicks {
             if (lastSelectedLocation != null) {
                 Timber.d("Location is set, can proceed")
-                navigation.navigate(CreatePlaceNavigation.Event.ProceedWith(lastSelectedLocation!!))
+                navigation.navigate(
+                    CreatePlaceNavigation.Event.ProceedWith(
+                        lastSelectedLocation!!
+                    )
+                )
             } else {
                 Timber.d("Location not selected, cannot proceed")
             }
