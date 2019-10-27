@@ -1,48 +1,44 @@
 package com.braczkow.placy.feature.place
 
 import android.content.Context
-import android.provider.SyncStateContract
-import com.google.android.gms.common.internal.Constants
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.coroutineScope
 import timber.log.Timber
 import javax.inject.Inject
-import kotlin.coroutines.coroutineContext
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-interface PlaceApi {
+interface GeofenceApi {
     sealed class Result {
         object Ok : Result()
         object Failed : Result()
     }
 
-    data class PlaceData(val name: String, val latLng: LatLng)
+    data class CreateGeofenceRequest(val id: String, val latLng: LatLng)
 
-    suspend fun createPlace(placeData: PlaceData): Result
+    suspend fun createGeofence(createGeofenceRequest: CreateGeofenceRequest): Result
 }
 
-class PlaceApiImpl @Inject constructor(
+class GeofenceApiImpl @Inject constructor(
     private val context: Context
-) : PlaceApi {
+) : GeofenceApi {
 
     private val DEFAULT_RADIUS = 100.0f
 
-    override suspend fun createPlace(placeData: PlaceApi.PlaceData): PlaceApi.Result =
+    override suspend fun createGeofence(createGeofenceRequest: GeofenceApi.CreateGeofenceRequest): GeofenceApi.Result =
         suspendCoroutine { continuation ->
             val client = LocationServices.getGeofencingClient(context)
 
             val geofence = Geofence.Builder()
                 .setCircularRegion(
-                    placeData.latLng.latitude,
-                    placeData.latLng.longitude,
+                    createGeofenceRequest.latLng.latitude,
+                    createGeofenceRequest.latLng.longitude,
                     DEFAULT_RADIUS
                 )
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
-                .setRequestId(placeData.name)
+                .setRequestId(createGeofenceRequest.id)
                 .setExpirationDuration(0)
                 .build()
 
@@ -55,11 +51,11 @@ class PlaceApiImpl @Inject constructor(
             client.addGeofences(request, null)
                 .addOnSuccessListener {
                     Timber.d("addGeofences success!")
-                    continuation.resume(PlaceApi.Result.Ok)
+                    continuation.resume(GeofenceApi.Result.Ok)
                 }
                 .addOnFailureListener {
                     Timber.d("addGeofences failed!")
-                    continuation.resume(PlaceApi.Result.Failed)
+                    continuation.resume(GeofenceApi.Result.Failed)
                 }
         }
 

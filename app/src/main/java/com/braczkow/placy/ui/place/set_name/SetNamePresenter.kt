@@ -1,7 +1,7 @@
 package com.braczkow.placy.ui.place.set_name
 
 import androidx.lifecycle.Lifecycle
-import com.braczkow.placy.feature.place.PlaceApi
+import com.braczkow.placy.feature.place.GeofenceApi
 import com.braczkow.placy.feature.util.DispatchersFactory
 import com.braczkow.placy.feature.util.DoOnStop
 import com.google.android.gms.maps.model.LatLng
@@ -12,7 +12,7 @@ import timber.log.Timber
 import javax.inject.Inject
 
 class SetNamePresenter @Inject constructor(
-    private val placeApi: PlaceApi,
+    private val geofenceApi: GeofenceApi,
     private val df: DispatchersFactory,
     private val lifecycle: Lifecycle,
     private val view: SetNameView,
@@ -36,8 +36,8 @@ class SetNamePresenter @Inject constructor(
             }
 
             uiScope.launch {
-                val result = placeApi.createPlace(
-                    PlaceApi.PlaceData(
+                val result = geofenceApi.createGeofence(
+                    GeofenceApi.CreateGeofenceRequest(
                         view.getName(),
                         latLng
                     )
