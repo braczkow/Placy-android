@@ -1,6 +1,9 @@
-package com.braczkow.placy.feature.place
+package com.braczkow.placy.feature.location
 
+import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import com.google.android.gms.location.Geofence
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
@@ -16,16 +19,34 @@ interface GeofenceApi {
         object Failed : Result()
     }
 
-    data class CreateGeofenceRequest(val id: String, val latLng: LatLng)
+    data class CreateGeofenceRequest(val id: String, val latLng: LatLng, val radius: Float)
 
     suspend fun createGeofence(createGeofenceRequest: CreateGeofenceRequest): Result
+}
+
+class GeofenceBroadcastReceiver: BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent?) {
+        Timber.d("onReceive")
+    }
+
 }
 
 class GeofenceApiImpl @Inject constructor(
     private val context: Context
 ) : GeofenceApi {
 
-    private val DEFAULT_RADIUS = 100.0f
+    private val GEOFENCE_BROADCAST_REQ_CODE = 3001
+    private val pendingIntent: PendingIntent
+
+    init {
+        val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
+        pendingIntent = PendingIntent.getBroadcast(
+            context,
+            GEOFENCE_BROADCAST_REQ_CODE,
+            intent,
+            0
+        )
+    }
 
     override suspend fun createGeofence(createGeofenceRequest: GeofenceApi.CreateGeofenceRequest): GeofenceApi.Result =
         suspendCoroutine { continuation ->
@@ -35,7 +56,7 @@ class GeofenceApiImpl @Inject constructor(
                 .setCircularRegion(
                     createGeofenceRequest.latLng.latitude,
                     createGeofenceRequest.latLng.longitude,
-                    DEFAULT_RADIUS
+                    createGeofenceRequest.radius
                 )
                 .setTransitionTypes(Geofence.GEOFENCE_TRANSITION_ENTER or Geofence.GEOFENCE_TRANSITION_EXIT)
                 .setRequestId(createGeofenceRequest.id)
@@ -48,7 +69,7 @@ class GeofenceApiImpl @Inject constructor(
                 .build()
 
 
-            client.addGeofences(request, null)
+            client.addGeofences(request, pendingIntent)
                 .addOnSuccessListener {
                     Timber.d("addGeofences success!")
                     continuation.resume(GeofenceApi.Result.Ok)

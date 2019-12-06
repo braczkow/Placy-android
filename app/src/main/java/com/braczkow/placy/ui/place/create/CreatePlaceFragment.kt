@@ -69,7 +69,9 @@ class CreatePlaceFragment : Fragment() {
             .placeComponentBuilder()
             .plus(
                 DaggerModule(
-                    lifecycle, mapController, createNavigation(),
+                    lifecycle,
+                    mapController,
+                    createNavigation(),
                     CreatePlaceView(view)
                 )
             )

@@ -1,7 +1,8 @@
 package com.braczkow.placy.ui.place.set_name
 
 import androidx.lifecycle.Lifecycle
-import com.braczkow.placy.feature.place.GeofenceApi
+import com.braczkow.placy.feature.location.GeofenceApi
+import com.braczkow.placy.feature.place.GeofencePlaceApi
 import com.braczkow.placy.feature.util.DispatchersFactory
 import com.braczkow.placy.feature.util.DoOnStop
 import com.google.android.gms.maps.model.LatLng
@@ -39,7 +40,8 @@ class SetNamePresenter @Inject constructor(
                 val result = geofenceApi.createGeofence(
                     GeofenceApi.CreateGeofenceRequest(
                         view.getName(),
-                        latLng
+                        latLng,
+                        GeofencePlaceApi.DEFAULT_RADIUS
                     )
                 )
                 Timber.d("Result is $result")
