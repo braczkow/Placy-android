@@ -4,8 +4,8 @@ import androidx.lifecycle.Lifecycle
 import com.braczkow.placy.feature.location.GeocoderApi
 import com.braczkow.placy.feature.location.LocationApi
 import com.braczkow.placy.feature.location.LocationUpdatesRequest
+import com.braczkow.placy.feature.util.CancelOnStop
 import com.braczkow.placy.feature.util.DispatchersFactory
-import com.braczkow.placy.feature.util.DisposableOnStop
 import com.braczkow.placy.feature.util.DoOnStart
 import com.braczkow.placy.feature.util.DoOnStop
 import com.google.android.gms.maps.model.LatLng
@@ -48,18 +48,17 @@ class CreatePlacePresenter @Inject constructor(
         DoOnStart(lifecycle) {
             locationReq.start()
 
-            val dos = DisposableOnStop(lifecycle)
-            dos.add(locationApi.locationRx()
-                .subscribe {
-                    val latLng = LatLng(it.latitude, it.longitude)
-                    proceedWith(latLng)
-                })
+            locationApi.location.subscribe {
+                val latLng = LatLng(it.latitude, it.longitude)
+                proceedWith(latLng)
+            }.also {
+                CancelOnStop(lifecycle, it)
+            }
 
-            dos.add(mapController
-                .longClicks()
-                .subscribe {
+            mapController
+                .longClicks{
                     proceedWith(it)
-                })
+                }
         }
 
 

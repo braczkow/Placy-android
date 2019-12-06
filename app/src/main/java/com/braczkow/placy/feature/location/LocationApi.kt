@@ -4,12 +4,10 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Location
 import android.os.Looper
-import android.util.Log
 import com.braczkow.placy.feature.PermissionApi
+import com.braczkow.placy.feature.util.Value
+import com.braczkow.placy.feature.util.ValueEmitter
 import com.google.android.gms.location.*
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -19,7 +17,8 @@ interface LocationUpdatesRequest {
 }
 
 interface LocationApi {
-    fun locationRx() : Observable<Location>
+    val location: Value<Location>
+
     fun makeLocationUpdatesRequest() : LocationUpdatesRequest
 }
 
@@ -28,11 +27,11 @@ class LocationApiImpl @Inject constructor(
     val context : Context,
     val permissionApi: PermissionApi
 ) : LocationApi {
-    private val locationPublisher = PublishSubject.create<Location>()
     private val startedRequests = mutableListOf<LocationUpdatesRequest>()
 
     private val fusedLocationClient: FusedLocationProviderClient
 
+    private val lastLocation: Location? = null
 
     init {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
@@ -41,7 +40,7 @@ class LocationApiImpl @Inject constructor(
             fusedLocationClient.lastLocation?.let { task ->
                 task.addOnSuccessListener {location ->
                     location?.let {
-                        locationPublisher.onNext(it)
+                        this.location.emit(it)
                     }
                 }
             }
@@ -49,7 +48,8 @@ class LocationApiImpl @Inject constructor(
 
     }
 
-    override fun locationRx() = locationPublisher
+    override val location = ValueEmitter<Location>()
+
 
     override fun makeLocationUpdatesRequest(): LocationUpdatesRequest {
         return object : LocationUpdatesRequest {
@@ -73,7 +73,7 @@ class LocationApiImpl @Inject constructor(
             Timber.d( "onLocation: ${p0}")
 
             p0?.let {
-                locationPublisher.onNext(it.lastLocation)
+                location.emit(it.lastLocation)
             }
         }
     }

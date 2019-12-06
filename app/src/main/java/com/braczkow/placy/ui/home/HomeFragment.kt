@@ -13,7 +13,6 @@ import com.braczkow.placy.R
 import com.braczkow.placy.base.App
 import com.braczkow.placy.base.ViewModelFactory
 import com.braczkow.placy.feature.place.PlaceListApi
-import io.reactivex.disposables.CompositeDisposable
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import timber.log.Timber
 import javax.inject.Inject
@@ -28,21 +27,12 @@ class HomeFragment : Fragment() {
         private val placeList = MutableLiveData<List<PlaceListApi.PlaceListEntry>>()
         fun getPlaceList(): LiveData<List<PlaceListApi.PlaceListEntry>> = placeList
 
-        private val disposeOnClear = CompositeDisposable()
 
         init {
-            val d = getPlaceListApi
-                .getPlaceList()
-                .subscribe {
-                    Timber.d("HomeFragmentVM, subscribe getPlaceList")
-                    placeList.postValue(it)
-                }
 
-            disposeOnClear.add(d)
         }
 
         override fun onCleared() {
-            disposeOnClear.dispose()
         }
     }
 

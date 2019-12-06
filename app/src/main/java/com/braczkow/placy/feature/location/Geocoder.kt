@@ -3,7 +3,6 @@ package com.braczkow.placy.feature.location
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
-import com.braczkow.placy.feature.util.SchedulersFactory
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -25,8 +24,7 @@ interface GeocoderApi {
 }
 
 class GeocoderApiImpl @Inject constructor(
-    private val context: Context,
-    private val sf: SchedulersFactory
+    private val context: Context
 ) : GeocoderApi {
 
     override suspend fun geocodeLatLng(latLng: LatLng): GeocoderApi.GeocodingResult = withContext(Dispatchers.IO) {

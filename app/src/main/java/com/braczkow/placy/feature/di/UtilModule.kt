@@ -3,7 +3,6 @@ package com.braczkow.placy.feature.di
 import com.braczkow.placy.feature.PermissionApi
 import com.braczkow.placy.feature.PermissionApiImpl
 import com.braczkow.placy.feature.util.DispatchersFactory
-import com.braczkow.placy.feature.util.SchedulersFactory
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -13,9 +12,6 @@ class UtilModule {
     @Provides
     @Singleton
     fun providePermissionApi(impl: PermissionApiImpl): PermissionApi = impl
-
-    @Provides
-    fun provideSchedulersFactory() = SchedulersFactory()
 
     @Provides
     fun provideDispatchersFactory() = DispatchersFactory()

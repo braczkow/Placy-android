@@ -1,61 +1,77 @@
 package com.braczkow.placy.ui.place.create
 
 import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import io.reactivex.Observable
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.PublishSubject
 import timber.log.Timber
 
 interface MapController {
     fun moveMarkerTo(latLng: LatLng)
-    fun longClicks(): Observable<LatLng>
+    fun longClicks(handler: (LatLng) -> Unit)
 }
 
 class MapControllerImpl(private val mapFragment: SupportMapFragment) :
     MapController {
+
+    private var longClicksHandler : (LatLng) -> Unit = {}
+
+    override fun longClicks(handler: (LatLng) -> Unit) {
+        longClicksHandler = handler
+    }
+
     private val DEFAULT_ZOOM = 15.0f
     private val TAG = "MapCtrl"
 
-    private val longClicksPublisher = PublishSubject.create<LatLng>()
+    private val markerMoveRequests = mutableListOf<MarkerMoveRequest>()
+
+    private var googleMap: GoogleMap? = null
+
 
     init {
         mapFragment.getMapAsync { map ->
             Timber.d( "Got map!")
 
+            googleMap = map
+
             map.setOnMapLongClickListener {latLng ->
                 Timber.d( "Long click on: ${latLng}")
-                longClicksPublisher.onNext(latLng)
+                longClicksHandler(latLng)
             }
 
             map.setOnMarkerClickListener {
                 true
             }
 
-            markerMovementQueue
-                .subscribe { mmr ->
+            processMoves()
 
-                    map.clear()
+//            markerMovementQueue
+//                .subscribe { mmr ->
+//
 
-                    map.animateCamera(CameraUpdateFactory.newLatLngZoom(mmr.latLng, mmr.zoom))
-                    map.addMarker(MarkerOptions().position(mmr.latLng))
-                }
+//                }
         }
     }
 
-    override fun longClicks(): Observable<LatLng> = longClicksPublisher
-    override fun moveMarkerTo(latLng: LatLng) {
-        markerMovementQueue.onNext(
-            MarkerMoveRequest(
-                latLng,
-                DEFAULT_ZOOM
-            )
-        )
+    private fun processMoves() {
+        googleMap?.let { map ->
+            markerMoveRequests.lastOrNull()?.let { mmr ->
+                map.clear()
+
+                map.animateCamera(CameraUpdateFactory.newLatLngZoom(mmr.latLng, mmr.zoom))
+                map.addMarker(MarkerOptions().position(mmr.latLng))
+            }
+
+            markerMoveRequests.clear()
+        }
     }
 
-    private val markerMovementQueue = BehaviorSubject.create<MarkerMoveRequest>()
+    override fun moveMarkerTo(latLng: LatLng) {
+        markerMoveRequests.add(MarkerMoveRequest(latLng, DEFAULT_ZOOM))
+        processMoves()
+    }
+
 
     private data class MarkerMoveRequest(val latLng: LatLng, val zoom : Float)
 }
