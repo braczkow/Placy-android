@@ -4,7 +4,9 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import com.braczkow.placy.base.App
 import com.google.android.gms.location.Geofence
+import com.google.android.gms.location.GeofencingEvent
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
@@ -22,11 +24,33 @@ interface GeofenceApi {
     data class CreateGeofenceRequest(val id: String, val latLng: LatLng, val radius: Float)
 
     suspend fun createGeofence(createGeofenceRequest: CreateGeofenceRequest): Result
+    fun geofenceEnter(list: List<String>)
+    fun geofenceExit(list: List<String>)
 }
 
 class GeofenceBroadcastReceiver: BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         Timber.d("onReceive")
+
+        val geofencingEvent = GeofencingEvent.fromIntent(intent)
+
+        if (geofencingEvent.hasError()) {
+            Timber.e("geofencingEvent.hasError: ${geofencingEvent.errorCode}")
+        }
+
+        val geofenceApi = App
+            .dagger()
+            .geofenceApi()
+
+        when (geofencingEvent.geofenceTransition) {
+            Geofence.GEOFENCE_TRANSITION_ENTER, Geofence.GEOFENCE_TRANSITION_DWELL -> {
+                geofenceApi.geofenceEnter(geofencingEvent.triggeringGeofences.map { it.requestId })
+            }
+            Geofence.GEOFENCE_TRANSITION_EXIT -> {
+                geofenceApi.geofenceExit(geofencingEvent.triggeringGeofences.map { it.requestId })
+            }
+        }
+
     }
 
 }
@@ -34,6 +58,13 @@ class GeofenceBroadcastReceiver: BroadcastReceiver() {
 class GeofenceApiImpl @Inject constructor(
     private val context: Context
 ) : GeofenceApi {
+    override fun geofenceEnter(list: List<String>) {
+        Timber.d("geofenceEnter: ${list.joinToString()}")
+    }
+
+    override fun geofenceExit(list: List<String>) {
+        Timber.d("geofenceExit: ${list.joinToString()}")
+    }
 
     private val GEOFENCE_BROADCAST_REQ_CODE = 3001
     private val pendingIntent: PendingIntent

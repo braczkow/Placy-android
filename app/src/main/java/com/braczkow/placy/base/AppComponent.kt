@@ -4,6 +4,7 @@ import com.braczkow.placy.feature.di.UtilModule
 import com.braczkow.placy.feature.di.LocationModule
 import com.braczkow.placy.feature.di.PlaceModule
 import com.braczkow.placy.feature.di.StorageModule
+import com.braczkow.placy.feature.location.GeofenceApi
 import com.braczkow.placy.ui.home.HomeFragment
 import com.braczkow.placy.ui.place.create.CreatePlaceFragment
 import com.braczkow.placy.ui.place.set_name.SetNameFragment
@@ -34,4 +35,6 @@ interface AppComponent {
     fun setNameBuilder(): SetNameFragment.DaggerComponent.Builder
 
     fun inject(homeFragment: HomeFragment)
+
+    fun geofenceApi(): GeofenceApi
 }
