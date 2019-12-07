@@ -22,7 +22,6 @@ class MapControllerImpl(private val mapFragment: SupportMapFragment) :
     }
 
     private val DEFAULT_ZOOM = 15.0f
-    private val TAG = "MapCtrl"
 
     private val markerMoveRequests = mutableListOf<MarkerMoveRequest>()
 
@@ -45,12 +44,6 @@ class MapControllerImpl(private val mapFragment: SupportMapFragment) :
             }
 
             processMoves()
-
-//            markerMovementQueue
-//                .subscribe { mmr ->
-//
-
-//                }
         }
     }
 
