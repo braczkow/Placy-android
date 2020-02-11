@@ -1,76 +1,65 @@
-package com.braczkow.placy.feature.location
+package com.braczkow.placy.platform.location.internal
 
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import com.braczkow.placy.base.App
+import com.braczkow.placy.platform.location.api.GeofenceApi
+import com.braczkow.placy.platform.location.api.GeofenceBroadcastReceiver
 import com.google.android.gms.location.Geofence
-import com.google.android.gms.location.GeofencingEvent
 import com.google.android.gms.location.GeofencingRequest
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.channels.ConflatedBroadcastChannel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.asFlow
 import timber.log.Timber
 import javax.inject.Inject
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-interface GeofenceApi {
-    sealed class Result {
-        object Ok : Result()
-        object Failed : Result()
-    }
-
-    data class CreateGeofenceRequest(val id: String, val latLng: LatLng, val radius: Float)
-
-    suspend fun createGeofence(createGeofenceRequest: CreateGeofenceRequest): Result
-    fun geofenceEnter(list: List<String>)
-    fun geofenceExit(list: List<String>)
-}
-
-class GeofenceBroadcastReceiver: BroadcastReceiver() {
-    override fun onReceive(context: Context?, intent: Intent?) {
-        Timber.d("onReceive")
-
-        val geofencingEvent = GeofencingEvent.fromIntent(intent)
-
-        if (geofencingEvent.hasError()) {
-            Timber.e("geofencingEvent.hasError: ${geofencingEvent.errorCode}")
-        }
-
-        val geofenceApi = App
-            .dagger()
-            .geofenceApi()
-
-        when (geofencingEvent.geofenceTransition) {
-            Geofence.GEOFENCE_TRANSITION_ENTER, Geofence.GEOFENCE_TRANSITION_DWELL -> {
-                geofenceApi.geofenceEnter(geofencingEvent.triggeringGeofences.map { it.requestId })
-            }
-            Geofence.GEOFENCE_TRANSITION_EXIT -> {
-                geofenceApi.geofenceExit(geofencingEvent.triggeringGeofences.map { it.requestId })
-            }
-        }
-
-    }
-
-}
-
 class GeofenceApiImpl @Inject constructor(
-    private val context: Context
+    private val context: Context,
+    private val someUtils: SomeUtils
 ) : GeofenceApi {
+    @UseExperimental(ExperimentalCoroutinesApi::class)
     override fun geofenceEnter(list: List<String>) {
         Timber.d("geofenceEnter: ${list.joinToString()}")
+        list.forEach {
+            enteredGeofences.add(it)
+        }
+
+        channel.offer(enteredGeofences)
     }
 
+    @UseExperimental(ExperimentalCoroutinesApi::class)
     override fun geofenceExit(list: List<String>) {
         Timber.d("geofenceExit: ${list.joinToString()}")
+        list.forEach {
+            enteredGeofences.remove(it)
+        }
+
+        channel.offer(enteredGeofences)
     }
+
+    val enteredGeofences = mutableSetOf<String>()
+
+    @UseExperimental(ExperimentalCoroutinesApi::class)
+    val channel =
+        ConflatedBroadcastChannel<Set<String>>()
+
+    @UseExperimental(FlowPreview::class)
+    override val currentGeofences: Flow<Set<String>>
+        get() = channel.asFlow()
 
     private val GEOFENCE_BROADCAST_REQ_CODE = 3001
     private val pendingIntent: PendingIntent
 
     init {
-        val intent = Intent(context, GeofenceBroadcastReceiver::class.java)
+        val intent = Intent(
+            context,
+            GeofenceBroadcastReceiver::class.java
+        )
         pendingIntent = PendingIntent.getBroadcast(
             context,
             GEOFENCE_BROADCAST_REQ_CODE,
@@ -81,7 +70,10 @@ class GeofenceApiImpl @Inject constructor(
 
     override suspend fun createGeofence(createGeofenceRequest: GeofenceApi.CreateGeofenceRequest): GeofenceApi.Result =
         suspendCoroutine { continuation ->
-            val client = LocationServices.getGeofencingClient(context)
+            val client =
+                LocationServices.getGeofencingClient(
+                    context
+                )
 
             val geofence = Geofence.Builder()
                 .setCircularRegion(
@@ -94,10 +86,11 @@ class GeofenceApiImpl @Inject constructor(
                 .setExpirationDuration(0)
                 .build()
 
-            val request = GeofencingRequest.Builder()
-                .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
-                .addGeofence(geofence)
-                .build()
+            val request =
+                GeofencingRequest.Builder()
+                    .setInitialTrigger(GeofencingRequest.INITIAL_TRIGGER_ENTER)
+                    .addGeofence(geofence)
+                    .build()
 
 
             client.addGeofences(request, pendingIntent)
@@ -113,4 +106,3 @@ class GeofenceApiImpl @Inject constructor(
 
 
 }
-

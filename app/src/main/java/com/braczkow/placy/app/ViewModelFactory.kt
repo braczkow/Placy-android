@@ -1,4 +1,4 @@
-package com.braczkow.placy.base
+package com.braczkow.placy.app
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

@@ -32,7 +32,12 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += "-Xuse-experimental=kotlin.Experimental"
     }
+}
+
+ext {
+    roomVersion = '2.2.3'
 }
 
 dependencies {
@@ -63,10 +68,6 @@ dependencies {
         exclude module: 'support-v4'
     }
 
-//    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-//    implementation 'io.reactivex.rxjava2:rxjava:2.2.9'
-//    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
-
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
 
@@ -80,6 +81,11 @@ dependencies {
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1"
 
     implementation 'com.google.code.gson:gson:2.8.5'
+
+    implementation "androidx.room:room-runtime:$roomVersion"
+    implementation "androidx.room:room-rxjava2:$roomVersion"
+    implementation "androidx.room:room-ktx:$roomVersion"
+    kapt "androidx.room:room-compiler:$roomVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

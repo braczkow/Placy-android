@@ -11,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 
 import com.braczkow.placy.R
-import com.braczkow.placy.base.App
+import com.braczkow.placy.app.App
 import com.google.android.gms.maps.model.LatLng
 import dagger.Module
 import dagger.Provides

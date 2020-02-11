@@ -1,8 +1,12 @@
 package com.braczkow.placy.feature.place
 
-import com.braczkow.placy.feature.location.GeofenceApi
+import com.braczkow.placy.platform.location.api.GeofenceApi
 import com.braczkow.placy.feature.storage.Storage
 import com.google.android.gms.maps.model.LatLng
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.InternalCoroutinesApi
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import java.util.*
 import javax.inject.Inject
 
@@ -19,10 +23,25 @@ interface GeofencePlaceApi {
 
 
 
+@InternalCoroutinesApi
 class GeofencePlaceApiImpl @Inject constructor(
     private val geofenceApi: GeofenceApi,
     private val storage: Storage
 ) : GeofencePlaceApi {
+
+    init {
+
+        GlobalScope.launch {
+            geofenceApi.currentGeofences
+                .collect { enteredPlaces ->
+
+
+
+                }
+        }
+
+    }
+
     override suspend fun addGeofencePlace(addPlaceRequest: GeofencePlaceApi.AddPlaceRequest) {
         val geofenceRequest = GeofenceApi.CreateGeofenceRequest(UUID.randomUUID().toString(), addPlaceRequest.latLng, addPlaceRequest.radius)
 
@@ -43,5 +62,9 @@ class GeofencePlaceApiImpl @Inject constructor(
         editable[geofenceRequest.id] = addPlaceRequest
 
         storage.save(GeofencePlaceApi.GeofencePlaceStorageData(editable))
+    }
+
+    private fun loadGeofencePlaces(): Map<String, GeofencePlaceApi.AddPlaceRequest> {
+        return storage.load(GeofencePlaceApi.GeofencePlaceStorageData::class.java)?.places ?: mapOf()
     }
 }

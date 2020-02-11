@@ -1,9 +1,9 @@
 package com.braczkow.placy.ui.place.create
 
 import androidx.lifecycle.Lifecycle
-import com.braczkow.placy.feature.location.GeocoderApi
-import com.braczkow.placy.feature.location.LocationApi
-import com.braczkow.placy.feature.location.LocationUpdatesRequest
+import com.braczkow.placy.platform.location.api.GeocoderApi
+import com.braczkow.placy.platform.location.api.LocationApi
+import com.braczkow.placy.platform.location.api.LocationUpdatesRequest
 import com.braczkow.placy.feature.util.CancelOnStop
 import com.braczkow.placy.feature.util.DispatchersFactory
 import com.braczkow.placy.feature.util.DoOnStart

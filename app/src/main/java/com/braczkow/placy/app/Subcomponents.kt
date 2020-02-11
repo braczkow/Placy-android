@@ -1,4 +1,4 @@
-package com.braczkow.placy.base
+package com.braczkow.placy.app
 
 import com.braczkow.placy.ui.place.create.CreatePlaceFragment
 import com.braczkow.placy.ui.place.set_name.SetNameFragment

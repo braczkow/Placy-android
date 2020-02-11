@@ -1,4 +1,4 @@
-package com.braczkow.placy.base
+package com.braczkow.placy.app
 
 import android.content.Context
 import dagger.Module

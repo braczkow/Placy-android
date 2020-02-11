@@ -1,7 +1,7 @@
 package com.braczkow.placy.ui.place.set_name
 
 import androidx.lifecycle.Lifecycle
-import com.braczkow.placy.feature.location.GeofenceApi
+import com.braczkow.placy.platform.location.api.GeofenceApi
 import com.braczkow.placy.feature.place.GeofencePlaceApi
 import com.braczkow.placy.feature.util.DispatchersFactory
 import com.braczkow.placy.feature.util.DoOnStop

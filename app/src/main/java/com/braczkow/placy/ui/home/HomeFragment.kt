@@ -1,7 +1,6 @@
 package com.braczkow.placy.ui.home
 
 
-import android.location.Location
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,8 +9,8 @@ import android.view.ViewGroup
 import androidx.lifecycle.*
 import androidx.navigation.fragment.findNavController
 import com.braczkow.placy.R
-import com.braczkow.placy.base.App
-import com.braczkow.placy.base.ViewModelFactory
+import com.braczkow.placy.app.App
+import com.braczkow.placy.app.ViewModelFactory
 import com.braczkow.placy.feature.place.PlaceListApi
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import timber.log.Timber
