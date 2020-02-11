@@ -12,7 +12,11 @@ import com.braczkow.placy.R
 import com.braczkow.placy.app.App
 import com.braczkow.placy.app.ViewModelFactory
 import com.braczkow.placy.feature.place.PlaceListApi
+import com.braczkow.placy.platform.network.api.BluetoothApi
+import kotlinx.android.synthetic.main.fragment_home.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -38,6 +42,9 @@ class HomeFragment : Fragment() {
     @Inject
     lateinit var viewModelFactory: ViewModelFactory
 
+    @Inject
+    lateinit var bluetoothApi: BluetoothApi
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,6 +65,14 @@ class HomeFragment : Fragment() {
         view.home_create_place_btn.setOnClickListener {
             findNavController()
                 .navigate(R.id.action_homeFragment_to_createPlaceFragment)
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            bluetoothApi
+                .networkState()
+                .collect {
+                    view.home_bluetooth_debug.setText("Bluetooth is: $it")
+                }
         }
 
         return view
