@@ -1,10 +1,9 @@
 package com.braczkow.placy.ui.place.set_name
 
 import androidx.lifecycle.Lifecycle
-import com.braczkow.placy.platform.location.api.GeofenceApi
+import com.braczkow.platform.location.api.GeofenceApi
 import com.braczkow.placy.feature.place.GeofencePlaceApi
-import com.braczkow.placy.feature.util.DispatchersFactory
-import com.braczkow.placy.feature.util.DoOnStop
+import com.braczkow.base.utils.DispatchersFactory
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancelChildren
@@ -25,7 +24,7 @@ class SetNamePresenter @Inject constructor(
 
     init {
 
-        DoOnStop(lifecycle) {
+        com.braczkow.base.utils.DoOnStop(lifecycle) {
             uiScope.coroutineContext.cancelChildren()
         }
 

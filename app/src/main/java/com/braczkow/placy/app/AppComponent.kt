@@ -1,8 +1,8 @@
 package com.braczkow.placy.app
 
 import com.braczkow.placy.feature.di.*
-import com.braczkow.placy.platform.location.api.GeofenceApi
-import com.braczkow.placy.platform.di.PlatformComponent
+import com.braczkow.platform.location.api.GeofenceApi
+import com.braczkow.platform.di.PlatformComponent
 import com.braczkow.placy.ui.home.HomeFragment
 import com.braczkow.placy.ui.place.create.CreatePlaceFragment
 import com.braczkow.placy.ui.place.set_name.SetNameFragment

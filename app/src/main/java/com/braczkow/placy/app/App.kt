@@ -2,10 +2,10 @@ package com.braczkow.placy.app
 
 import android.app.Application
 import com.braczkow.placy.BuildConfig
-import com.braczkow.placy.platform.di.DaggerPlatformComponent
-import com.braczkow.placy.platform.di.PlatformModule
+import com.braczkow.platform.di.DaggerPlatformComponent
+import com.braczkow.platform.di.PlatformModule
 import com.braczkow.placy.feature.place.GeofencePlaceApi
-import com.braczkow.placy.platform.network.api.BluetoothApi
+import com.braczkow.platform.network.api.BluetoothApi
 import timber.log.Timber
 import javax.inject.Inject
 

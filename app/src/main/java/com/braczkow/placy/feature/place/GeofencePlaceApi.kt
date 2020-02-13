@@ -1,12 +1,13 @@
 package com.braczkow.placy.feature.place
 
-import com.braczkow.placy.platform.location.api.GeofenceApi
+import com.braczkow.platform.location.api.GeofenceApi
 import com.braczkow.placy.feature.storage.Storage
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.InternalCoroutinesApi
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
+import kotlinx.android.synthetic.main.fragment_home.view.*
+import kotlinx.coroutines.flow.collect
 import java.util.*
 import javax.inject.Inject
 
@@ -34,8 +35,6 @@ class GeofencePlaceApiImpl @Inject constructor(
         GlobalScope.launch {
             geofenceApi.currentGeofences
                 .collect { enteredPlaces ->
-
-
 
                 }
         }

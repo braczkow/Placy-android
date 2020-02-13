@@ -1,13 +1,10 @@
 package com.braczkow.placy.ui.place.create
 
 import androidx.lifecycle.Lifecycle
-import com.braczkow.placy.platform.location.api.GeocoderApi
-import com.braczkow.placy.platform.location.api.LocationApi
-import com.braczkow.placy.platform.location.api.LocationUpdatesRequest
-import com.braczkow.placy.feature.util.CancelOnStop
-import com.braczkow.placy.feature.util.DispatchersFactory
-import com.braczkow.placy.feature.util.DoOnStart
-import com.braczkow.placy.feature.util.DoOnStop
+import com.braczkow.platform.location.api.GeocoderApi
+import com.braczkow.platform.location.api.LocationApi
+import com.braczkow.platform.location.api.LocationUpdatesRequest
+import com.braczkow.base.utils.DispatchersFactory
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancelChildren
@@ -45,24 +42,24 @@ class CreatePlacePresenter @Inject constructor(
 
         locationReq = locationApi.makeLocationUpdatesRequest()
 
-        DoOnStart(lifecycle) {
+        com.braczkow.base.utils.DoOnStart(lifecycle) {
             locationReq.start()
 
             locationApi.location.subscribe {
                 val latLng = LatLng(it.latitude, it.longitude)
                 proceedWith(latLng)
             }.also {
-                CancelOnStop(lifecycle, it)
+                com.braczkow.base.utils.CancelOnStop(lifecycle, it)
             }
 
             mapController
-                .longClicks{
+                .longClicks {
                     proceedWith(it)
                 }
         }
 
 
-        DoOnStop(lifecycle) {
+        com.braczkow.base.utils.DoOnStop(lifecycle) {
             uiScope.coroutineContext.cancelChildren()
             locationReq.stop()
         }

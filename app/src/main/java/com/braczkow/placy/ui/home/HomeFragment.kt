@@ -12,8 +12,7 @@ import com.braczkow.placy.R
 import com.braczkow.placy.app.App
 import com.braczkow.placy.app.ViewModelFactory
 import com.braczkow.placy.feature.place.PlaceListApi
-import com.braczkow.placy.platform.network.api.BluetoothApi
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.braczkow.platform.network.api.BluetoothApi
 import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
